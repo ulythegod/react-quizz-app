@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import blobsTop from './images/blobs-top.png'
+import blobsBottom from './images/blobs-bottom.png'
+import StartScreen from './components/StartScreen.js'
 
 function App() {
+  const [startPosition, setStartPosition] = React.useState(true);
+
+  function StartQuiz() {
+    setStartPosition(false);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main">
+      <img className='main-top__img' src={blobsTop} />
+      {startPosition ? <StartScreen StartQuiz={StartQuiz} /> : ''}
+      <img className='main-bottom__img' src={blobsBottom} />
     </div>
   );
 }
