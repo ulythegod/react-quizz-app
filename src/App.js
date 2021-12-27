@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import blobsTop from './images/blobs-top.png'
-import blobsBottom from './images/blobs-bottom.png'
 import StartScreen from './components/StartScreen.js'
+import Quiz from './components/Quiz';
 
 function App() {
   const [startPosition, setStartPosition] = React.useState(true);
+  const [questions, setQuestion] = React.useState({});
 
   function StartQuiz() {
     setStartPosition(false);
@@ -13,9 +13,7 @@ function App() {
 
   return (
     <div className="main">
-      <img className='main-top__img' src={blobsTop} />
-      {startPosition ? <StartScreen StartQuiz={StartQuiz} /> : ''}
-      <img className='main-bottom__img' src={blobsBottom} />
+      {startPosition ? <StartScreen StartQuiz={StartQuiz} /> : <Quiz />}
     </div>
   );
 }
