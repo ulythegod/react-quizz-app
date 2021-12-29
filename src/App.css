@@ -37,7 +37,7 @@
   font-size: 16px;
 }
 
-.start-screen__button {
+.button {
   font-weight: 500;
   font-size: 16px;
   background-color: #4D5B9E;
@@ -48,7 +48,7 @@
   cursor: pointer;
 }
 
-.start-screen__button:hover {
+.button:hover {
   opacity: .8;
 }
 
@@ -78,10 +78,13 @@
 .answer {
   border-radius: 8px;
   border: #293264 solid 1px;
-  padding: 5px;
+  padding: 5px 0px;
   font-weight: bold;
   font-size: 10px;
   cursor: pointer;
+  margin: 5px;
+  width: 31%;
+  text-align: center;
 }
 
 .answer:hover {
@@ -110,4 +113,8 @@
   border: 0px;
   background-color: #94D7A2;
   cursor: auto;
+}
+
+.quiz__button {
+  margin-top: 10px;
 }
