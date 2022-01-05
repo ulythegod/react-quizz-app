@@ -109,6 +109,11 @@
   opacity: .8;
 }
 
+.answer.failed:hover {
+  background-color: #F8BCBC;
+  border: none;
+}
+
 .answer.correct {
   border: 0px;
   background-color: #94D7A2;
@@ -117,4 +122,9 @@
 
 .quiz__button {
   margin-top: 10px;
+}
+
+.quiz__result {
+  font-weight: bold;
+  font-size: 16px;
 }

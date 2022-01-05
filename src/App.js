@@ -9,10 +9,12 @@ function App() {
   const [questionsForQuiz, setQuestionsForQuiz] = React.useState({});
   const [correctAnswers, setCorrectAnswers] = React.useState([]);
   const [userAnswers, setUserAnswers] = React.useState([]);
-  const [gameEnd, setGameEnd] = React.useState(true);
+  const [gameEnd, setGameEnd] = React.useState(false);
+  const [gameResult, setGameResult] = React.useState(0);
 
-  function StartQuiz() {
+  function startQuiz() {
     setStartPosition(prevStartPosition => !prevStartPosition);
+
     const questionsForQuizArray = questions.results.map(
       (value, index) => {
         let answersArray = [];
@@ -27,6 +29,7 @@ function App() {
             answers={answersArray} 
             correctAnswer={value.correct_answer}
             handleAnswer={(event) => handleAnswer(event)}
+            userAnswer=""
         />
       }
     );
@@ -57,18 +60,73 @@ function App() {
     });
   }
 
-  function checkAnswers() {
+  function checkAnswers(event) {
+    event.preventDefault();
 
+    setUserAnswers(prevUsersAnswers => deleteDoubles(prevUsersAnswers));
+
+    if (userAnswers.length == 4) {
+      setGameEnd(true);
+
+      for (let i = 0; i < userAnswers.length; i ++) {
+        if (userAnswers[i] == correctAnswers[i]) {
+          setGameResult(prevGameResult => (prevGameResult + 1));
+        }
+      }
+
+      let updatedPropsForQuestions = questionsForQuiz.map((element, index) => ({
+        ...element.props,
+        userAnswer: userAnswers[index]
+      }));
+
+      let udatedQuestionsForUestions = updatedPropsForQuestions.map((element, index) => {
+        return <Question 
+            key={index} 
+            id={index} 
+            question={element.question} 
+            answers={element.answers} 
+            correctAnswer={element.correctAnswer}
+            handleAnswer={(event) => handleAnswer(event)}
+            userAnswer={element.userAnswer}
+        />
+      });
+
+      setQuestionsForQuiz(prevQuestionsForQuiz => udatedQuestionsForUestions);
+    }
+  }
+
+  function deleteDoubles(iterable) {
+    if (!Array.isArray(iterable)) {
+      iterable = iterable.split('');
+    }
+    
+    for (let i = 0; i < iterable.length; i ++) {
+      if (iterable[i - 1] === iterable[i]) {
+        iterable.splice(i, 1);
+        i--;
+      }
+    }
+    
+    return iterable;
+  }
+
+  function startQuizAgain() {
+    setStartPosition(prevStartPosition => !prevStartPosition);
+
+    if (gameEnd) {
+      setGameEnd(false);
+    }
   }
 
   return (
     <div className="main">
       {
         startPosition ? 
-        <StartScreen StartQuiz={StartQuiz} /> : 
+        <StartScreen StartQuiz={startQuiz} /> : 
         <form className='quiz'>
             {questionsForQuiz}
-            <button className='button quiz__button'>{gameEnd ? 'Play again' : 'Check answers'}</button>
+            {gameEnd && <p className='quiz__result'>You scored {gameResult}/{correctAnswers.length} correct answers</p>}
+            <button className='button quiz__button' onClick={gameEnd ? startQuizAgain : checkAnswers}>{gameEnd ? 'Play again' : 'Check answers'}</button>
         </form>
       }
     </div>
