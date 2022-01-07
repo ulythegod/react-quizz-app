@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import StartScreen from './components/StartScreen.js'
 import Question from './components/Question'
+import Confetti from 'react-confetti'
 
 function App() {
   const [startPosition, setStartPosition] = React.useState(true);
@@ -112,14 +113,16 @@ function App() {
 
   function startQuizAgain() {
     setStartPosition(prevStartPosition => !prevStartPosition);
+    setGameResult(0);
 
     if (gameEnd) {
-      setGameEnd(false);
+      setGameEnd(false);      
     }
   }
 
   return (
     <div className="main">
+      {(gameResult == 4) && <Confetti />}
       {
         startPosition ? 
         <StartScreen StartQuiz={startQuiz} /> : 

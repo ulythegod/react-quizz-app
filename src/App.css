@@ -120,6 +120,11 @@
   cursor: auto;
 }
 
+.answer.correct:hover {
+  background-color: #94D7A2;
+  border: none;
+}
+
 .quiz__button {
   margin-top: 10px;
 }
