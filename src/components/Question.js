@@ -6,24 +6,22 @@ export default function Question(props) {
             return <button 
                 key={index}
                 className={
-                    (props.userAnswer == "") ? 
-                    'answer' :
-                    (props.active == true && props.userAnswer != value) ?
-                    'answer innactive' :
-                    (props.active == true && props.userAnswer == value) ?
-                    'answer innactive correct' : ''
+                    (props.active && props.userAnswerIndex == null) ? "answer active" : 
+                    (!props.active && props.userAnswerIndex == index && props.userAnswer) ? "answer correct" :
+                    (!props.active && props.userAnswerIndex == index && !props.userAnswer) ? "answer failed" :
+                    "answer innactive"
                 }
-                value={value.replace(/&quot;/g, '"').replace(/&#039;/g, '`').replace(/&amp;/g, '&')}
-                onClick={(event) => {props.handleAnswer(event, index)}}
+                value={value.isCorrect}
+                onClick={(event) => props.handleAnswer(event, props.id, index, value.isCorrect, props.active)}
             >
-                {value.replace(/&quot;/g, '"').replace(/&#039;/g, '`').replace(/&amp;/g, '&')} 
+                {value.answer} 
             </button>
         }
     )
 
     return(
         <div className='quiz__question'>
-            <p className='question__title'>{props.question.replace(/&quot;/g, '"').replace(/&#039;/g, '`').replace(/&amp;/g, '&')}</p>
+            <p className='question__title'>{props.question}</p>
             <div className='question__answers'>
                 {answersElements}
             </div>

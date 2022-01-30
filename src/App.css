@@ -92,12 +92,11 @@ body {
   font-weight: bold;
   font-size: 16px;
   background-color: #F5F7FB;
-  display: flex;
-  align-items: center;
   border-radius: 8px;
   border: #42899b solid 1px;
   padding: 5px 2px;
   text-align: center;
+  width: 475px;
 }
 
 .question__answers {
@@ -180,5 +179,4 @@ body {
 .rigth-win-animation {
   position: absolute;
   margin-right: 50px;
-  margin-top: 50px;
 }
