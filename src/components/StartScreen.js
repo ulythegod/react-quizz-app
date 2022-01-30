@@ -3,9 +3,9 @@ import React from 'react';
 export default function StartScreen(props) {
     return (
         <div className='start-screen'>
-            <h1 className='start-screen__title'>Quizzical</h1>
-            <p className='start-screen__description'>Quizz game</p>
-            <button className='button' onClick={props.StartQuiz}>Start quiz</button>
+            <h1 className='start-screen__title'>Кризалис квиз</h1>
+            <p className='start-screen__description'>Какая ты песня Кризалис</p>
+            <button className='button' onClick={props.StartQuiz}>Начать игру</button>
         </div>
     )
 }

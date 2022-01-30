@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import StartScreen from './components/StartScreen.js'
 import Question from './components/Question'
-import Confetti from 'react-confetti'
+import Butterflies from './components/Butterflies'
 
 function App() {
   const [startPosition, setStartPosition] = React.useState(true);
@@ -51,13 +51,36 @@ function App() {
       .then(questions => setQuestions(questions))
   }, [startPosition]);
 
-  function handleAnswer(event) {
+  function handleAnswer(event, indexAnswer) {
     event.preventDefault();
 
     setUserAnswers(prevUsersAnswers => {
       let newUsersAnswers = [...prevUsersAnswers];
       newUsersAnswers.push(event.target.value);
       return newUsersAnswers;
+    });
+
+    let updatedPropsForQuestions = questionsForQuiz.map((element, index) => ({
+      ...element.props,
+      userAnswer: userAnswers[index]
+    }));
+
+    let udatedQuestionsForUestions = updatedPropsForQuestions.map((element, index) => {
+      if (index == indexAnswer) {
+        return <Question 
+            key={index} 
+            id={index} 
+            question={element.question} 
+            answers={element.answers}
+            handleAnswer={(event) => handleAnswer(event)}
+            userAnswer={element.userAnswer}
+            active={false}
+        />
+      } else {
+        return element;
+      }
+
+      setQuestionsForQuiz(prevQuestionsForQuiz => udatedQuestionsForUestions);
     });
   }
 
@@ -74,25 +97,6 @@ function App() {
           setGameResult(prevGameResult => (prevGameResult + 1));
         }
       }
-
-      let updatedPropsForQuestions = questionsForQuiz.map((element, index) => ({
-        ...element.props,
-        userAnswer: userAnswers[index]
-      }));
-
-      let udatedQuestionsForUestions = updatedPropsForQuestions.map((element, index) => {
-        return <Question 
-            key={index} 
-            id={index} 
-            question={element.question} 
-            answers={element.answers} 
-            correctAnswer={element.correctAnswer}
-            handleAnswer={(event) => handleAnswer(event)}
-            userAnswer={element.userAnswer}
-        />
-      });
-
-      setQuestionsForQuiz(prevQuestionsForQuiz => udatedQuestionsForUestions);
     }
   }
 
@@ -114,6 +118,7 @@ function App() {
   function startQuizAgain() {
     setStartPosition(prevStartPosition => !prevStartPosition);
     setGameResult(0);
+    setUserAnswers([]);
 
     if (gameEnd) {
       setGameEnd(false);      
@@ -122,7 +127,6 @@ function App() {
 
   return (
     <div className="main">
-      {(gameResult == 4) && <Confetti />}
       {
         startPosition ? 
         <StartScreen StartQuiz={startQuiz} /> : 

@@ -8,14 +8,13 @@ export default function Question(props) {
                 className={
                     (props.userAnswer == "") ? 
                     'answer' :
-                    (props.userAnswer == value && props.userAnswer == props.correctAnswer) ?
-                    'answer innactive correct' :
-                    (props.userAnswer == value && props.userAnswer != props.correctAnswer) ?
-                    'answer innactive failed' :
-                    'answer innactive'
+                    (props.active == true && props.userAnswer != value) ?
+                    'answer innactive' :
+                    (props.active == true && props.userAnswer == value) ?
+                    'answer innactive correct' : ''
                 }
                 value={value.replace(/&quot;/g, '"').replace(/&#039;/g, '`').replace(/&amp;/g, '&')}
-                onClick={(event) => {props.handleAnswer(event)}}
+                onClick={(event) => {props.handleAnswer(event, index)}}
             >
                 {value.replace(/&quot;/g, '"').replace(/&#039;/g, '`').replace(/&amp;/g, '&')} 
             </button>
